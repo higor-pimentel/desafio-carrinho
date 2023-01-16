@@ -1,0 +1,94 @@
+<mat-sidenav-container>
+    <mat-sidenav mode="push" position="end" [opened]="show" fixedInViewport>
+        <div *ngIf="!!cartList.length">
+            <ng-container *ngFor="let cartProduct of cartList">
+                <mat-card *ngIf="cartProduct.units" class="card">
+                    <mat-card-header>
+                        <mat-card-title-group>
+                            <mat-card-title><strong>
+                                    {{cartProduct.product.title}}
+                                </strong></mat-card-title>
+                            <mat-card-subtitle>{{cartProduct.product.rating}}</mat-card-subtitle>
+                            <img mat-card-lg-image [src]="cartProduct.product.images[1]">
+                        </mat-card-title-group>
+                    </mat-card-header>
+                    <mat-card-content class="content">
+                        {{cartProduct.product.description}}
+                    </mat-card-content>
+                    <mat-card-actions style="justify-content: space-between;">
+                        <p>Price: ${{cartProduct.product.price}}</p>
+
+                        <div>
+                            <button mat-icon-button color="primary" (click)="subProduct(cartProduct.product)"><mat-icon
+                                    fontIcon="remove"></mat-icon></button>
+                            <span style="margin: 0 1rem; margin-bottom: 1rem;">{{cartProduct.units}}</span>
+                            <button mat-icon-button color="primary"
+                                (click)="addProduct(cartProduct.product)"><mat-icon>add</mat-icon></button>
+                            <button mat-icon-button color="warn"
+                                (click)="delProduct(cartProduct.product)"><mat-icon>delete</mat-icon></button>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+            </ng-container>
+
+            <div>
+                <div style="margin-inline: 1rem;">
+
+                    CUPOM: <mat-form-field>
+                        <mat-label>CUPOM</mat-label>
+                        <input #cupomInput matInput type="text">
+                    </mat-form-field>
+                    <button mat-button color="accent" (click)="applyCupom(cupomInput.value)">Apply</button>
+                </div>
+                <p><strong>Subtotal:</strong> ${{totalPrice()}}</p>
+                <p>
+                    <strong>Total: </strong> ${{totalPrice() - cupom * totalPrice()}}
+                </p>
+            </div>
+        </div>
+
+
+        <ng-container *ngIf="!cartList.length">
+
+            <p>Não há item no carrinho</p>
+        </ng-container>
+
+    </mat-sidenav>
+    <mat-sidenav-content class="container-cards">
+        <ng-container *ngFor="let product of productsList">
+            <mat-card class="card">
+                <mat-card-header>
+                    <mat-card-title-group>
+                        <mat-card-title><strong>
+                                {{product.title}}
+                            </strong></mat-card-title>
+                        <mat-card-subtitle>
+                            {{product.rating}}
+
+
+                        </mat-card-subtitle>
+                        <img mat-card-lg-image [src]="product.images[1]">
+                    </mat-card-title-group>
+
+                </mat-card-header>
+                <mat-card-content class="content">
+                    {{product.description}}
+                </mat-card-content>
+                <mat-card-actions style="justify-content: space-between;">
+                    <p>Price: ${{product.price}}</p>
+
+                    <div>
+                        <button mat-icon-button color="warn"><mat-icon>favorite</mat-icon></button>
+                        <button mat-icon-button color="primary" (click)="addProduct(product)"><mat-icon
+                                fontIcon="add_shopping_cart"></mat-icon></button>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </ng-container>
+        <button mat-fab color="primary" class="cart-button" (click)="showCart()">
+            <mat-icon><span class="material-icons-outlined">
+                    shopping_cart
+                </span></mat-icon>
+        </button>
+    </mat-sidenav-content>
+</mat-sidenav-container>
