@@ -1,0 +1,48 @@
+<div class="container">
+    <section class="confirm">
+
+        <h2>Pedido Confirmado</h2>
+        <mat-icon>check_circle</mat-icon>
+    </section>
+
+    <section>
+
+        <ng-container *ngFor="let cartProduct of cartList">
+            <mat-card *ngIf="cartProduct.units" class="card">
+                <mat-card-header>
+                    <mat-card-title-group>
+                        <mat-card-title><strong>
+                                {{cartProduct.product.title}}
+                            </strong></mat-card-title>
+                        <mat-card-subtitle>{{cartProduct.product.rating}}</mat-card-subtitle>
+                        <img mat-card-lg-image [src]="cartProduct.product.images[1]">
+                    </mat-card-title-group>
+                </mat-card-header>
+                <mat-card-content class="content">
+                    <p>Price: ${{cartProduct.product.price}}</p>
+                </mat-card-content>
+                <mat-card-actions style="justify-content: flex-end;">
+                    <div>
+                        <span style="margin: 0 1rem; margin-bottom: 1rem;">{{cartProduct.units}} unidades</span>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </ng-container>
+
+        <div style="margin-inline: 1rem;">
+            <div class="value-cart" style="margin-left: 3rem;">
+                <p> <strong>Frete:</strong> {{ frete | currency:
+                    'BRL' }} </p>
+
+                <p><strong>Subtotal:</strong> {{totalPrice() | currency:
+                    'BRL'}}</p>
+                <p *ngIf="!!cupom">Desconto: -{{cupomValor | percent}}</p>
+                <p>
+                    <strong>Total: </strong> {{(totalPrice() - cupomValor * totalPrice() + frete) | currency:
+                    'BRL'}}
+                </p>
+
+            </div>
+        </div>
+    </section>
+</div>

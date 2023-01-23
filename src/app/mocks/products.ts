@@ -1,4 +1,6 @@
-export const products: any[] = [
+import { Product } from '../core/models';
+
+export const products: Product[] = [
   {
     id: 1,
     title: 'iPhone 9',

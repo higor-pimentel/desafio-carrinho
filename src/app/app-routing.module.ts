@@ -7,6 +7,28 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/products/products.module').then((m) => m.ProductsModule),
   },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./pages/products/products.module').then((m) => m.ProductsModule),
+  },
+  {
+    path: 'cart',
+    loadChildren: () =>
+      import('./pages/cart/cart.module').then((m) => m.CartModule),
+  },
+  {
+    path: 'account',
+    redirectTo: '/',
+  },
+  {
+    path: 'admin',
+    redirectTo: '/',
+  },
+  {
+    path: 'login',
+    redirectTo: '/',
+  },
 ];
 
 @NgModule({

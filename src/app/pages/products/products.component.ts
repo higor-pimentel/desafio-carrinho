@@ -1,80 +1,66 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CartList, Product } from 'src/app/core/models';
+import { CartService, ProductsService } from 'src/app/core/services';
 import { products } from '../../mocks/products';
-
-interface CartList {
-  units: number;
-  product: any;
-}
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent {
-  productsList: any[];
+export class ProductsComponent implements OnInit {
+  productsList: Product[] = [];
   show = false;
   cartList: CartList[] = [];
   cupom = 0;
+  imageURL = '';
 
-  constructor() {
-    this.productsList = products;
+  constructor(
+    private cartService: CartService,
+    private productService: ProductsService
+  ) {}
+
+  ngOnInit(): void {
+    this.productService.getAllProducts().subscribe((res) => {
+      this.productsList = res.products;
+      this.switchImage(0);
+    });
+    this.cartList = this.cartService.cartList;
   }
 
   showCart() {
     this.show = !this.show;
   }
 
-  addProduct(product: any) {
-    let cartIndex = 0;
-    if (
-      this.cartList.some((cartProduct, index) => {
-        cartIndex = index;
-        return cartProduct.product.id === product.id;
-      })
-    ) {
-      this.cartList[cartIndex].units++;
-    } else {
-      this.cartList.push({ product, units: 1 });
+  switchImage(count: number) {
+    if (count >= this.productsList.length) {
+      count = 0;
     }
+
+    this.imageURL = this.productsList[count].thumbnail;
+
+    setTimeout(() => {
+      this.switchImage(count + 1);
+    }, 5000);
+  }
+
+  addProduct(product: any) {
+    this.cartService.addProduct(product);
   }
 
   subProduct(product: any) {
-    let cartIndex = 0;
-    if (
-      this.cartList.some((cartProduct, index) => {
-        cartIndex = index;
-        return cartProduct.product.id === product.id;
-      })
-    ) {
-      this.cartList[cartIndex].units--;
-      if (!this.cartList[cartIndex].units) {
-        this.cartList.splice(cartIndex, 1);
-      }
-    }
+    this.cartService.subProduct(product);
   }
 
   delProduct(product: any) {
-    let cartIndex = 0;
-
-    this.cartList.some((cartProduct, index) => {
-      cartIndex = index;
-      return cartProduct.product.id === product.id;
-    });
-
-    this.cartList.splice(cartIndex, 1);
+    this.cartService.delProduct(product);
   }
 
   totalPrice() {
-    let total = 0;
-    this.cartList.forEach((item) => {
-      total = total + item.units * item.product.price;
-    });
-
-    return total;
+    return this.cartService.totalPrice();
   }
 
   applyCupom(input: any) {
-    this.cupom = Number(input) / 100;
+    this.cupom = this.cartService.applyCupom(input);
   }
 }

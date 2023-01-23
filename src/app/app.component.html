@@ -1,9 +1,44 @@
-<div>
-  <mat-toolbar color="primary">
-    Aulas Angular - Desafio semana 1
+<header>
+  <mat-toolbar color="primary" class="mat-toolbar-header  mat-elevation-z5">
+    <div>
+
+      <img src="../assets/img/5350888.jpg" height="65px" alt="Logo">
+
+
+      <a>
+
+        Online Shop
+      </a>
+    </div>
+
+    <div>
+
+      <button mat-button routerLink="/">Products</button>
+    </div>
+    <div>
+
+      <button mat-icon-button color="accent" aria-label="Access the cart page" routerLink="/cart">
+        <mat-icon><span class="material-icons-outlined">
+            shopping_cart
+          </span></mat-icon>
+      </button>
+
+      <button mat-icon-button color="accent" aria-label="Access the cart page" routerLink="/account">
+        <mat-icon><span class="material-icons-outlined">
+            account_circle
+          </span></mat-icon>
+      </button>
+    </div>
   </mat-toolbar>
-</div>
+</header>
 
 <div class="content" role="main">
   <router-outlet></router-outlet>
 </div>
+
+<!-- <footer>
+  <mat-toolbar color="primary">
+
+    Powered by <a href="https://angular.io/"> Angular</a>
+  </mat-toolbar>
+</footer> -->

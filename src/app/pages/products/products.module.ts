@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 
 import { ProductsComponent } from './products.component';
 import { ProductsRoutingModule } from './products-routing.module';
+import { ProductsService } from 'src/app/core/services';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [ProductsComponent],
@@ -19,6 +21,8 @@ import { ProductsRoutingModule } from './products-routing.module';
     MatButtonModule,
     MatSidenavModule,
     MatInputModule,
+    HttpClientModule,
   ],
+  providers: [ProductsService],
 })
 export class ProductsModule {}

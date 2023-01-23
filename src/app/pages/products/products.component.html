@@ -38,11 +38,13 @@
                         <mat-label>CUPOM</mat-label>
                         <input #cupomInput matInput type="text">
                     </mat-form-field>
-                    <button mat-button color="accent" (click)="applyCupom(cupomInput.value)">Apply</button>
+                    <button mat-raised-button color="accent" (click)="applyCupom(cupomInput.value)">Apply</button>
                 </div>
-                <p><strong>Subtotal:</strong> ${{totalPrice()}}</p>
+                <p><strong>Subtotal:</strong> {{totalPrice() | currency:
+                    'BRL'}}</p>
                 <p>
-                    <strong>Total: </strong> ${{totalPrice() - cupom * totalPrice()}}
+                    <strong>Total: </strong> {{(totalPrice() - cupom * totalPrice()) | currency:
+                    'BRL' }}
                 </p>
             </div>
         </div>
@@ -55,6 +57,7 @@
 
     </mat-sidenav>
     <mat-sidenav-content class="container-cards">
+        <img [src]="imageURL" alt="Imagens dos produtos" class="caurossel">
         <ng-container *ngFor="let product of productsList">
             <mat-card class="card">
                 <mat-card-header>
@@ -75,7 +78,8 @@
                     {{product.description}}
                 </mat-card-content>
                 <mat-card-actions style="justify-content: space-between;">
-                    <p>Price: ${{product.price}}</p>
+                    <p>Price: {{product.price | currency:
+                        'BRL'}}</p>
 
                     <div>
                         <button mat-icon-button color="warn"><mat-icon>favorite</mat-icon></button>

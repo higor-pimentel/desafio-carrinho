@@ -1,0 +1,26 @@
+<div class="container">
+
+    <h2>Checkout</h2>
+
+    <section class="payments">
+        <h3>Formas de pagamento: </h3>
+        <mat-radio-group #radioGroup labelPosition="before" required (change)="radioSelected($event)">
+            <mat-radio-button value="credit">Cartão de crédito <mat-icon aria-hidden="false">credit_card</mat-icon>
+            </mat-radio-button>
+            <mat-radio-button value="transfer">Transferência
+                bancária <mat-icon aria-hidden="false">payments</mat-icon> </mat-radio-button>
+            <mat-radio-button value="boleto">Boleto <mat-icon>receipt</mat-icon></mat-radio-button>
+            <mat-radio-button value="cripto">Criptomoedas <mat-icon
+                    aria-hidden="false">currency_bitcoin</mat-icon></mat-radio-button>
+            <mat-radio-button value="carteira">Carteira digital <mat-icon
+                    aria-hidden="false">wallet</mat-icon></mat-radio-button>
+
+        </mat-radio-group>
+    </section>
+
+    <div style="display: flex; justify-content: flex-end;">
+
+        <button mat-flat-button color="accent" class="btn-next" [disabled]="!payment"
+            (click)="navegar()">Confirmar</button>
+    </div>
+</div>

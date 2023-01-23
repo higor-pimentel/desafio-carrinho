@@ -1,0 +1,84 @@
+<div class="container">
+
+    <section style="display: flex; justify-content: space-between">
+
+        <h2>Cart</h2>
+        <ng-container *ngTemplateOutlet="checkout" con></ng-container>
+    </section>
+    <section>
+        <div *ngIf="!!cartList.length;else emptyCart">
+            <ng-container *ngFor="let cartProduct of cartList">
+                <mat-card *ngIf="cartProduct.units" class="card">
+                    <mat-card-header>
+                        <mat-card-title-group>
+                            <mat-card-title><strong>
+                                    {{cartProduct.product.title}}
+                                </strong></mat-card-title>
+                            <mat-card-subtitle>{{cartProduct.product.rating}}</mat-card-subtitle>
+                            <img mat-card-lg-image [src]="cartProduct.product.images[1]">
+                        </mat-card-title-group>
+                    </mat-card-header>
+                    <mat-card-content class="content">
+                        <p>Price: ${{cartProduct.product.price}}</p>
+                    </mat-card-content>
+                    <mat-card-actions style="justify-content: flex-end;">
+
+                        <div>
+                            <button mat-icon-button color="primary" (click)="subProduct(cartProduct.product)"><mat-icon
+                                    fontIcon="remove"></mat-icon></button>
+                            <span style="margin: 0 1rem; margin-bottom: 1rem;">{{cartProduct.units}}</span>
+                            <button mat-icon-button color="primary"
+                                (click)="addProduct(cartProduct.product)"><mat-icon>add</mat-icon></button>
+                            <button mat-icon-button color="warn"
+                                (click)="delProduct(cartProduct.product)"><mat-icon>delete</mat-icon></button>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+            </ng-container>
+
+            <div style="margin-inline: 1rem;">
+                <div class="freigth-cart">
+                    Frete para: <mat-form-field>
+                        <mat-label>CEP</mat-label>
+                        <input #freigthInput matInput type="text" maxlength="8" placeholder="Ex. 00000-000">
+                    </mat-form-field>
+                    <button mat-raised-button color="accent" (click)="applyFreigth(freigthInput.value)">Apply</button>
+                </div>
+                <div class="value-cart">
+                    CUPOM: <mat-form-field>
+                        <mat-label>CUPOM</mat-label>
+                        <input #cupomInput matInput type="text" [value]="cupom">
+                    </mat-form-field>
+                    <button mat-raised-button color="accent" (click)="applyCupom(cupomInput.value)">Apply</button>
+                    <div style="margin-left: 3rem;">
+
+                        <p><strong>Subtotal:</strong> {{totalPrice() | currency:
+                            'BRL'}}</p>
+                        <p *ngIf="!!cupom">Desconto: -{{cupomValor | percent}}</p>
+                        <p>
+                            <strong>Total: </strong> {{(totalPrice() - cupomValor * totalPrice() + freigth) | currency:
+                            'BRL'}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #emptyCart>
+            <div class="emptyCart">
+                <p>Sua sacola está vazia</p>
+                <p>Vá para a página inicial ou procure no site os produtos que vão te deixar feliz.</p>
+                <p>Quando encontrá-los, clique no botão adicionar à sacola ;)</p>
+            </div>
+        </ng-template>
+    </section>
+
+    <div style="display: flex; justify-content: flex-end">
+
+        <ng-container *ngTemplateOutlet="checkout"></ng-container>
+    </div>
+</div>
+<ng-template #checkout>
+    <button mat-flat-button color="accent" class="btn-checkout" routerLink="checkout"
+        [disabled]="!cartList.length">Checkout</button>
+</ng-template>
