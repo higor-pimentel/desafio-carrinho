@@ -7,6 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { LoginGuard } from './core/guards/login.guard';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginInterceptor } from './core/interceptors/login.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,8 +20,15 @@ import { MatButtonModule } from '@angular/material/button';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    HttpClientModule,
   ],
-  providers: [],
   bootstrap: [AppComponent],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoginInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class AppModule {}

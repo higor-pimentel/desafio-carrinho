@@ -10,9 +10,10 @@ import { ProductsComponent } from './products.component';
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsService } from 'src/app/core/services';
 import { HttpClientModule } from '@angular/common/http';
+import { DetailComponent } from './detail/detail.component';
 
 @NgModule({
-  declarations: [ProductsComponent],
+  declarations: [ProductsComponent, DetailComponent],
   imports: [
     CommonModule,
     ProductsRoutingModule,

@@ -57,14 +57,14 @@
 
     </mat-sidenav>
     <mat-sidenav-content class="container-cards">
-        <img [src]="imageURL" alt="Imagens dos produtos" class="caurossel">
+        <img [src]="imageURL" alt="Imagens dos produtos" class="caurossel" loading="lazy">
         <ng-container *ngFor="let product of productsList">
             <mat-card class="card">
                 <mat-card-header>
                     <mat-card-title-group>
-                        <mat-card-title><strong>
-                                {{product.title}}
-                            </strong></mat-card-title>
+                        <mat-card-title><a [routerLink]="['/product', product.id]"><strong>
+                                    {{product.title}}
+                                </strong></a></mat-card-title>
                         <mat-card-subtitle>
                             {{product.rating}}
 
