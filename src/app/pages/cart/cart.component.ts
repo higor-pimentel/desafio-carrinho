@@ -42,4 +42,9 @@ export class CartComponent {
   applyFreigth(input: any) {
     this.freigth = Math.random() * 100;
   }
+
+  canExit(): boolean {
+    if (confirm('Tem certeza que deseja sair do carrinho ?')) return true;
+    else return false;
+  }
 }

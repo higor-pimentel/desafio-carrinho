@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CartList, Product } from 'src/app/core/models';
 import { CartService, ProductsService } from 'src/app/core/services';
 import { products } from '../../mocks/products';
@@ -14,16 +15,18 @@ export class ProductsComponent implements OnInit {
   cartList: CartList[] = [];
   cupom = 0;
   imageURL = '';
+  productsCategory!: string | null;
 
   constructor(
     private cartService: CartService,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.productService.getAllProducts().subscribe((res) => {
-      this.productsList = res.products;
-      this.switchImage(0);
+    this.route.paramMap.subscribe((params) => {
+      this.productsCategory = params.get('category');
+      this.getProducts();
     });
     this.cartList = this.cartService.cartList;
   }
@@ -42,6 +45,20 @@ export class ProductsComponent implements OnInit {
     setTimeout(() => {
       this.switchImage(count + 1);
     }, 5000);
+  }
+
+  getProducts() {
+    this.productsCategory
+      ? this.productService
+          .getAllProductsCategory(this.productsCategory)
+          .subscribe((res) => {
+            this.productsList = res.products;
+            this.switchImage(0);
+          })
+      : this.productService.getAllProducts().subscribe((res) => {
+          this.productsList = res.products;
+          this.switchImage(0);
+        });
   }
 
   addProduct(product: any) {
