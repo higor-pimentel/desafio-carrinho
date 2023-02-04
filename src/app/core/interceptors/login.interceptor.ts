@@ -23,6 +23,7 @@ export class LoginInterceptor implements HttpInterceptor {
       let authRequest = request.clone({
         setHeaders: { Authorization: 'Bearer ' + authToken },
       });
+
       return next.handle(authRequest);
     }
     return next.handle(request);

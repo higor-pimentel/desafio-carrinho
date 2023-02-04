@@ -1,0 +1,19 @@
+.container {
+    height: 81vh;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgba(232, 239, 255, 0.247);
+    margin: 1vw;
+    padding: 1vw 5vw;
+}
+
+img {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

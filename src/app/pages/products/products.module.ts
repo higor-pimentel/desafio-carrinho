@@ -11,6 +11,7 @@ import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsService } from 'src/app/core/services';
 import { HttpClientModule } from '@angular/common/http';
 import { DetailComponent } from './detail/detail.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [ProductsComponent, DetailComponent],
@@ -23,6 +24,7 @@ import { DetailComponent } from './detail/detail.component';
     MatSidenavModule,
     MatInputModule,
     HttpClientModule,
+    NgxSpinnerModule,
   ],
   providers: [ProductsService],
 })

@@ -26,13 +26,9 @@ export class LoginService {
 
   login(credentials: Credentials) {
     return this.httpClient
-      .post<ResponseLogin>(
-        environment.login,
-        JSON.stringify(this.userCredentials),
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      )
+      .post<ResponseLogin>(environment.login, JSON.stringify(credentials), {
+        headers: { 'Content-Type': 'application/json' },
+      })
       .pipe(
         tap((res) => {
           localStorage.setItem('user-info', JSON.stringify(res));
@@ -42,6 +38,11 @@ export class LoginService {
 
   isLoged(): boolean {
     return !!localStorage.getItem('user-info');
+  }
+
+  isAdmin(): void {
+    let user = localStorage.getItem('user-info');
+    user;
   }
 
   getToken(): string {
