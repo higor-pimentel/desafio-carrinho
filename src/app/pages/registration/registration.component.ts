@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { User } from 'src/app/core/models';
 import { LoginService, UserService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss'],
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss'],
 })
-export class AccountComponent implements OnInit {
+export class RegistrationComponent implements OnInit {
   telRegex: RegExp = new RegExp('\\d{2}\\s?\\d{4,5}\\-?\\d{4}');
 
   userForm: FormGroup = this.formBuilder.group({
@@ -36,29 +38,20 @@ export class AccountComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private loginService: LoginService,
-    private spinner: NgxSpinnerService
+    private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.spinner.show();
-    this.userService.getUser(this.loginService.getUserId()).subscribe({
-      next: (user) => {
-        this.spinner.hide();
-        this.userForm.patchValue({
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          gender: user.gender,
-          phone: user.phone,
-          endereco: user.address.address,
-          city: user.address.city,
-          state: user.address.state,
-          cep: user.address.postalCode,
-        });
+  ngOnInit(): void {}
+
+  salvar() {
+    let user: User = { ...this.userForm.value };
+    console.log(user);
+
+    this.userService.create(user).subscribe({
+      next: (res) => {
+        this.userForm.reset();
+        this.router.navigate(['login']);
       },
     });
   }
-
-  salvar() {}
 }

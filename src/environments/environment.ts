@@ -1,4 +1,5 @@
 export const environment = {
+  base: 'https://dummyjson.com/',
   API_URL: 'https://dummyjson.com/products',
   login: 'https://dummyjson.com/auth/login',
   search: '/search',
@@ -15,4 +16,5 @@ export const environment = {
     ],
   },
   category: '/category',
+  user: 'users',
 };

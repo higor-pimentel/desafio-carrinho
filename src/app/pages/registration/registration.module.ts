@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccountComponent } from './account.component';
+import { RegistrationComponent } from './registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -13,12 +13,12 @@ import { UserService } from 'src/app/core/services/user.service';
 export const routes: Routes = [
   {
     path: '',
-    component: AccountComponent,
+    component: RegistrationComponent,
   },
 ];
 
 @NgModule({
-  declarations: [AccountComponent],
+  declarations: [RegistrationComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -32,4 +32,4 @@ export const routes: Routes = [
   ],
   providers: [UserService],
 })
-export class AccountModule {}
+export class RegistrationModule {}

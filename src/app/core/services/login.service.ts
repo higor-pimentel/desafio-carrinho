@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs';
-import { Credentials } from '../models';
+import { Credentials, User } from '../models';
 
 type ResponseLogin = {
   id: number;
@@ -53,7 +53,23 @@ export class LoginService {
     return '';
   }
 
-  clear() {
+  getUserName(): string {
+    const userinfo = localStorage.getItem('user-info');
+    if (!!userinfo) {
+      return JSON.parse(userinfo).firstName;
+    }
+    return '';
+  }
+
+  getUserId(): string {
+    const userinfo = localStorage.getItem('user-info');
+    if (!!userinfo) {
+      return JSON.parse(userinfo).id;
+    }
+    return '';
+  }
+
+  clear(): void {
     localStorage.removeItem('user-info');
   }
 }
