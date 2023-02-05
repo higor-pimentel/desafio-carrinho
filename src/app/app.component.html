@@ -28,11 +28,14 @@
             </span></mat-icon>
         </button>
 
-        <button mat-icon-button color="accent" aria-label="Access the cart page" routerLink="/account">
+        <button class="account" mat-icon-button color="accent" aria-label="Access the cart page" routerLink="/account">
+          {{name}}
           <mat-icon><span class="material-icons-outlined">
               account_circle
             </span></mat-icon>
         </button>
+        <button *ngIf="isLoged" mat-button (click)="logout()">Logout</button>
+
       </div>
     </mat-toolbar>
   </header>

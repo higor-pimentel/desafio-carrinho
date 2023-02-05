@@ -1,3 +1,4 @@
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
 <mat-sidenav-container>
     <mat-sidenav mode="push" position="end" [opened]="show" fixedInViewport>
         <div *ngIf="!!cartList.length">
@@ -58,6 +59,17 @@
     </mat-sidenav>
     <mat-sidenav-content class="container-cards">
         <img [src]="imageURL" alt="Imagens dos produtos" class="caurossel" loading="lazy">
+
+        <div class="search">
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Search</mat-label>
+                <input #search matInput placeholder="Ex. Iphone" type="search" (search)="searchProduct($event.target)">
+            </mat-form-field>
+            <button mat-stroked-button (click)="searchProduct(search)">Search</button>
+        </div>
+
+
         <ng-container *ngFor="let product of productsList">
             <mat-card class="card">
                 <mat-card-header>

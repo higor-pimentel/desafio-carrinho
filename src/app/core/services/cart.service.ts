@@ -92,4 +92,12 @@ export class CartService {
     localStorage.removeItem('cupom');
     localStorage.removeItem('cartList');
   }
+
+  getCartProduct(id: string) {
+    let cartProduct = this.cartList.find(
+      (product) => product.product.id === Number(id)
+    );
+
+    return cartProduct;
+  }
 }

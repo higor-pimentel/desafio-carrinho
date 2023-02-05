@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs';
-import { Credentials } from '../models';
+import { Credentials, User } from '../models';
 
 type ResponseLogin = {
   id: number;
@@ -26,13 +26,9 @@ export class LoginService {
 
   login(credentials: Credentials) {
     return this.httpClient
-      .post<ResponseLogin>(
-        environment.login,
-        JSON.stringify(this.userCredentials),
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      )
+      .post<ResponseLogin>(environment.login, JSON.stringify(credentials), {
+        headers: { 'Content-Type': 'application/json' },
+      })
       .pipe(
         tap((res) => {
           localStorage.setItem('user-info', JSON.stringify(res));
@@ -44,6 +40,11 @@ export class LoginService {
     return !!localStorage.getItem('user-info');
   }
 
+  isAdmin(): void {
+    let user = localStorage.getItem('user-info');
+    user;
+  }
+
   getToken(): string {
     const userinfo = localStorage.getItem('user-info');
     if (!!userinfo) {
@@ -52,7 +53,23 @@ export class LoginService {
     return '';
   }
 
-  clear() {
+  getUserName(): string {
+    const userinfo = localStorage.getItem('user-info');
+    if (!!userinfo) {
+      return JSON.parse(userinfo).firstName;
+    }
+    return '';
+  }
+
+  getUserId(): string {
+    const userinfo = localStorage.getItem('user-info');
+    if (!!userinfo) {
+      return JSON.parse(userinfo).id;
+    }
+    return '';
+  }
+
+  clear(): void {
     localStorage.removeItem('user-info');
   }
 }

@@ -12,9 +12,8 @@ import { LoginService } from '../services';
 @Injectable({
   providedIn: 'root',
 })
-export class LoginGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
   constructor(private loginService: LoginService, private router: Router) {}
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -23,8 +22,6 @@ export class LoginGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.loginService.isLoged()
-      ? true
-      : this.router.parseUrl('/login?redirect=' + route.url[0].path);
+    return this.loginService.isLoged() ? true : this.router.parseUrl('/login');
   }
 }

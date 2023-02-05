@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from './core/guards/admin.guard';
 import { LoginGuard } from './core/guards/login.guard';
-import { AccountComponent } from './pages/account/account.component';
-import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   {
@@ -17,20 +16,27 @@ const routes: Routes = [
   },
   {
     path: 'account',
-    component: AccountComponent,
     canActivate: [LoginGuard],
-    canActivateChild: [LoginGuard],
+    loadChildren: () =>
+      import('./pages/account/account.module').then((m) => m.AccountModule),
   },
   {
     path: 'admin',
-    component: AccountComponent,
-    canActivate: [LoginGuard],
-    canActivateChild: [LoginGuard],
+    canActivate: [LoginGuard, AdminGuard],
+    loadChildren: () =>
+      import('./pages/admin/admin.module').then((m) => m.AdminModule),
   },
   {
     path: 'login',
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginModule),
+  },
+  {
+    path: 'registration',
+    loadChildren: () =>
+      import('./pages/registration/registration.module').then(
+        (m) => m.RegistrationModule
+      ),
   },
 ];
 

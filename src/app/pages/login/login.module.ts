@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login.component';
-import { LoginService } from 'src/app/core/services/login.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export const routes: Routes = [
   {
@@ -26,6 +26,7 @@ export const routes: Routes = [
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
   ],
 })
 export class LoginModule {}

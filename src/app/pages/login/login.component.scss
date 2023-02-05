@@ -1,6 +1,6 @@
 div {
     width: 100%;
-    height: 90vh;
+    height: 87vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,5 +18,10 @@ div {
 mat-icon {
     width: 200px;
     height: 200px;
+    margin-bottom: 2vh;
+}
 
+a {
+    margin: 1rem;
+    text-align: right;
 }

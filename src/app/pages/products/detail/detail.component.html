@@ -1,1 +1,38 @@
-<p>detail works!</p>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<div *ngIf="product" class="container">
+    <div class="">
+        <div style="display: flex;justify-content: space-between;">
+
+            <h2>
+
+                {{product.title}}
+            </h2>
+            <button mat-icon-button color="warn"><mat-icon>favorite</mat-icon></button>
+        </div>
+
+        <h5>Avaliação: {{product.rating}}</h5>
+
+        <div class="info">
+            <img [src]="product.images[1]" loading="lazy">
+
+            <div>
+                <h3>Preço: {{product.price | currency:
+                    'BRL'}}</h3>
+
+                <div *ngIf="!cartProduct;else cart">
+
+                    <button mat-icon-button color="primary" (click)="addProduct(product)"><mat-icon
+                            fontIcon="add_shopping_cart"></mat-icon></button>
+                </div>
+            </div>
+
+            <ng-template #cart>
+                <button mat-icon-button color="primary" (click)="subProduct(product)"><mat-icon
+                        fontIcon="remove"></mat-icon></button>
+                <span style="margin: 0 1rem; margin-bottom: 1rem;">{{cartProduct.units}}</span>
+                <button mat-icon-button color="primary" (click)="addProduct(product)"><mat-icon>add</mat-icon></button>
+                <button mat-icon-button color="warn" (click)="delProduct(product)"><mat-icon>delete</mat-icon></button>
+            </ng-template>
+        </div>
+    </div>
+</div>

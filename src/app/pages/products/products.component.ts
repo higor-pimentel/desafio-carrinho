@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CartList, Product } from 'src/app/core/models';
 import { CartService, ProductsService } from 'src/app/core/services';
 import { products } from '../../mocks/products';
@@ -20,12 +21,14 @@ export class ProductsComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private productService: ProductsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.productsCategory = params.get('category');
+      this.spinner.show();
       this.getProducts();
     });
     this.cartList = this.cartService.cartList;
@@ -35,15 +38,15 @@ export class ProductsComponent implements OnInit {
     this.show = !this.show;
   }
 
-  switchImage(count: number) {
-    if (count >= this.productsList.length) {
+  switchImage(count: number, productsList: Product[]) {
+    if (count >= productsList.length) {
       count = 0;
     }
 
-    this.imageURL = this.productsList[count].thumbnail;
+    this.imageURL = productsList[count].thumbnail;
 
     setTimeout(() => {
-      this.switchImage(count + 1);
+      this.switchImage(count + 1, productsList);
     }, 5000);
   }
 
@@ -53,11 +56,13 @@ export class ProductsComponent implements OnInit {
           .getAllProductsCategory(this.productsCategory)
           .subscribe((res) => {
             this.productsList = res.products;
-            this.switchImage(0);
+            this.switchImage(0, res.products);
+            this.spinner.hide();
           })
       : this.productService.getAllProducts().subscribe((res) => {
           this.productsList = res.products;
-          this.switchImage(0);
+          this.switchImage(0, res.products);
+          this.spinner.hide();
         });
   }
 
@@ -79,5 +84,15 @@ export class ProductsComponent implements OnInit {
 
   applyCupom(input: any) {
     this.cupom = this.cartService.applyCupom(input);
+  }
+
+  searchProduct(target: any) {
+    if (target) {
+      this.spinner.show();
+      this.productService.searchProduct(target.value).subscribe((result) => {
+        this.productsList = result.products;
+        this.spinner.hide();
+      });
+    }
   }
 }
